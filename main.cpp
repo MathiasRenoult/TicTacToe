@@ -1,5 +1,8 @@
 #include <iostream>
 
+/*
+ * comment !
+ */
 int main() {
     bool b[3][3] = {
             {true, true, true},
