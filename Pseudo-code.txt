@@ -1,0 +1,1 @@
+to make a da tik tak tow we use 2d array of booleans to then make test across lines, this way, we avoid a lot of ifs
