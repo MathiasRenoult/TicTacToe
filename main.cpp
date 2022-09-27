@@ -5,7 +5,7 @@
  * The input is a 3x3 array of bool. NULL is the default state
  * and true/false are for the players.
  */
-const int SIZE = 3;
+const int SIZE = 5;
 /*
 static int** FillArray(int** arr, int size)
 {
