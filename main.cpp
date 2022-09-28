@@ -1,30 +1,21 @@
 #include <iostream>
-#include <cstdlib>
+#include <ctime>
 /*
  * Efficient way to check if a player won a tic tac toe game.
  * The input is a 3x3 array of bool. NULL is the default state
  * and true/false are for the players.
  */
-const int SIZE = 5;
-/*
-static int** FillArray(int** arr, int size)
-{
-    srand(time(0));
-    for(int i = 0; i<size; i++)
-    {
-        for(int j = 0; j<size;j++)
-        {
-            arr[i][j] = (rand()%2) - 1;
-        }
-    }
-    return arr;
-}
-*/
-
+const int SIZE = 3;
 int main() {
-    int b[SIZE][SIZE];
+    int b[SIZE][SIZE] =
+            {
+                    {0,0,-1},
+                    {0,-1,0},
+                    {-1,0,0},
+            };
     srand(time(0));
     // generate random inputs
+    /*
     for(int i = 0; i<SIZE; i++)
     {
         for(int j = 0; j<SIZE;j++)
@@ -32,52 +23,39 @@ int main() {
             b[i][j] = (rand()%3) - 1;
         }
     }
-    /*
-    if(     ((b[0][0] == b[0][1]) && (b[0][1] == b[0][2]) && (b[0][2] != 0) ||
-             (b[1][0] == b[1][1]) && (b[1][1] == b[1][2]) && (b[1][2] != 0) ||
-             (b[2][0] == b[2][1]) && (b[2][1] == b[2][2]) && (b[2][2] != 0) ||
-             (b[0][0] == b[1][0]) && (b[1][0] == b[2][0]) && (b[2][0] != 0) ||
-             (b[0][1] == b[1][1]) && (b[1][1] == b[2][1]) && (b[2][1] != 0) ||
-             (b[0][2] == b[1][2]) && (b[1][2] == b[2][2]) && (b[2][2] != 0) ||
-             (b[0][0] == b[1][1]) && (b[1][1] == b[2][2]) && (b[2][2] != 0) ||
-             (b[0][2] == b[1][1]) && (b[1][1] == b[2][0]) && (b[2][0] != 0)))
-    {
-        std::cout << "Win!" << std::endl;
-    }
-    else
-    {
-        std::cout << "Not win!" << std::endl;
-    }
-*/
-    int r = 0,c = 0,d1 = 0, d2 = 0;
+     */
+
+    int row = 0,column = 0,diagonal1 = 0, diagonal2 = 0;
     for(int i=0;i<SIZE;i++)
     {
         for(int j=0;j<SIZE;j++)
         {
-            r += b[i][j];
-            c += b[j][i];
+            row += b[i][j];
+            column += b[j][i];
             if(i == j)
             {
-                d1 += b[i][j];
-                d2 += b[j][i];
+                diagonal1 += b[i][j];
+            }
+            if(i == SIZE-j-1)
+            {
+                diagonal2 += b[i][j];
             }
         }
-        if(r == SIZE || c == SIZE || d1 == SIZE || d2 == SIZE)
+        if(row == SIZE || column == SIZE || diagonal1 == SIZE || diagonal2 == SIZE)
         {
             std::cout << "P1 win!" << std::endl;
             break;
         }
-        else if (r == -SIZE || c == -SIZE || d1 == -SIZE || d2 == -SIZE)
+        else if (row == -SIZE || column == -SIZE || diagonal1 == -SIZE || diagonal2 == -SIZE)
         {
             std::cout << "P2 win!" << std::endl;
             break;
         }
 
-        r = 0;
-        c = 0;
-        d1 = 0;
-        d2 = 0;
+        row = 0;
+        column = 0;
     }
+    std::cout << diagonal2 << std::endl;
 
     // print array
     for(int i = 0; i<SIZE; i++)
