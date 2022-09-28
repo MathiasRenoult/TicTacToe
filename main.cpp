@@ -62,9 +62,9 @@ int main() {
     {
         for(int j = 0; j<SIZE;j++)
         {
-            if(b[i][j] == -1) std::cout << "X";
-            else if(b[i][j] == 1) std::cout << "O";
-            else std::cout << "-";
+            if(b[i][j] == -1) std::cout << " X ";
+            else if(b[i][j] == 1) std::cout << " O ";
+            else std::cout << " - ";
         }
         std::cout << std::endl;
     }
