@@ -9,20 +9,19 @@
  */
 const int PLAYMODE = 0;
 const int SIZE = 3;
-int8_t b[SIZE][SIZE] =
+int8_t board[SIZE][SIZE] =
         {
                 {0,0,-1},
                 {0,-1,0},
                 {-1,0,0},
         };
-
 /*
  * Affiche le tableau de jeu dans la console
  */
 void PrintArray()
 {
     std::cout << "---------------" << std::endl;
-    for(auto & i : b)
+    for(auto & i : board)
     {
         std::cout << "|";
         for(signed char j : i)
@@ -43,7 +42,7 @@ void PrintArray()
 void GenerateRandomArray()
 {
     srand(time(0));
-    for(auto & i : b)
+    for(auto & i : board)
     {
         for(signed char & j : i)
         {
@@ -57,7 +56,7 @@ void GenerateRandomArray()
  */
 void InitializeArray()
 {
-    for(auto & i : b)
+    for(auto & i : board)
     {
         for(signed char & j : i)
         {
@@ -86,9 +85,9 @@ void HumanPlay(bool isCrossPlaying)
             if(xCoord <= SIZE && xCoord > 0 && yCoord <= SIZE && yCoord > 0)
             {
                 //std::cout << "Played on cell " + std::to_string((xCoord*10) + yCoord) << std::endl;
-                if(b[xCoord][yCoord] == 0)
+                if(board[xCoord][yCoord] == 0)
                 {
-                    b[xCoord][yCoord] = isCrossPlaying ? -1 : 1;
+                    board[xCoord][yCoord] = isCrossPlaying ? -1 : 1;
                     stayInLoop = false;
                 }
                 else
@@ -125,7 +124,7 @@ uint8_t CheckForWinner()
     bool equality = true;
     int8_t row = 0,column = 0,diagonal1 = 0, diagonal2 = 0;
 
-    for(auto & i : b)
+    for(auto & i : board)
     {
         for(uint8_t j=0;j<SIZE;j++)
         {
@@ -139,15 +138,15 @@ uint8_t CheckForWinner()
         {
             for(uint8_t j=0;j<SIZE;j++)
             {
-                row += b[i][j];
-                column += b[j][i];
+                row += board[i][j];
+                column += board[j][i];
                 if(i == j)
                 {
-                    diagonal1 += b[i][j];
+                    diagonal1 += board[i][j];
                 }
                 if(i == SIZE-j-1)
                 {
-                    diagonal2 += b[i][j];
+                    diagonal2 += board[i][j];
                 }
             }
             if(row == SIZE || column == SIZE || diagonal1 == SIZE || diagonal2 == SIZE)
@@ -180,6 +179,7 @@ void GameLoop()
     bool inGame = true;
     bool isCrossPlaying = rand()%2;
     bool playMode;
+
     std::string playerChoice;
     std::cout << "Choose play mode (1 = 2-player, 2 = player VS Human)" << std::endl;
     std::cin >> playerChoice;
@@ -206,7 +206,6 @@ void GameLoop()
 
 
 int main() {
-
     while (1)
     {
         GameLoop();
