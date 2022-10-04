@@ -16,20 +16,30 @@ int8_t b[SIZE][SIZE] =
                 {-1,0,0},
         };
 
+/*
+ * Affiche le tableau de jeu dans la console
+ */
 void PrintArray()
 {
+    std::cout << "---------------" << std::endl;
     for(auto & i : b)
     {
+        std::cout << "|";
         for(signed char j : i)
         {
-            if(j == -1) std::cout << "X";
-            else if(j == 1) std::cout << "O";
-            else std::cout << "-";
+            if(j == -1) std::cout << " X ";
+            else if(j == 1) std::cout << " O ";
+            else std::cout << "   ";
+            std::cout << "|";
         }
         std::cout << std::endl;
     }
+    std::cout << "---------------" << std::endl;
 }
 
+/*
+ * Remplis le tabelau de jeu avec des valeurs aléatoires de -1, 0 ou 1
+ */
 void GenerateRandomArray()
 {
     srand(time(0));
@@ -42,6 +52,9 @@ void GenerateRandomArray()
     }
 }
 
+/*
+ * Initialise le tableau en remplissant toutes ses cases avec un 0
+ */
 void InitializeArray()
 {
     for(auto & i : b)
@@ -53,6 +66,9 @@ void InitializeArray()
     }
 }
 
+/*
+ * Gère le tour de jeu pour un joueur humain
+ */
 void HumanPlay(bool isCrossPlaying)
 {
     std::string cell;
@@ -67,9 +83,9 @@ void HumanPlay(bool isCrossPlaying)
         yCoord = cell[1] - '0';
         if(cell.length() == 2)
         {
-            if(xCoord < SIZE && xCoord >= 0 && yCoord < SIZE && yCoord >= 0)
+            if(xCoord <= SIZE && xCoord > 0 && yCoord <= SIZE && yCoord > 0)
             {
-                std::cout << "Played on cell " + std::to_string((xCoord*10) + yCoord) << std::endl;
+                //std::cout << "Played on cell " + std::to_string((xCoord*10) + yCoord) << std::endl;
                 if(b[xCoord][yCoord] == 0)
                 {
                     b[xCoord][yCoord] = isCrossPlaying ? -1 : 1;
@@ -93,21 +109,27 @@ void HumanPlay(bool isCrossPlaying)
     } while (stayInLoop);
 }
 
+/*
+ * Gère un tour de jeu pour une IA
+ */
 void AIPlay(bool isCrossPlaying)
 {
 
 }
 
+/*
+ * Parcours le tableau et détermine s'il y a un gagnant.
+ */
 uint8_t CheckForWinner()
 {
     bool equality = true;
     int8_t row = 0,column = 0,diagonal1 = 0, diagonal2 = 0;
 
-    for(uint8_t i=0;i<SIZE;i++)
+    for(auto & i : b)
     {
         for(uint8_t j=0;j<SIZE;j++)
         {
-            if(b[i][j] == 0) equality = false;
+            if(i[j] == 0) equality = false;
         }
     }
 
@@ -144,11 +166,15 @@ uint8_t CheckForWinner()
     else
     {
         std::cout << "Nobody won..." << std::endl;
+        return 2;
     }
 
     return 0;
 }
 
+/*
+ * Gère le jeu complet
+ */
 void GameLoop()
 {
     bool inGame = true;
@@ -168,7 +194,11 @@ void GameLoop()
         PrintArray();
         if(CheckForWinner() != 0)
         {
-            CheckForWinner() == 1 ? std::cout << "P1 win!" << std::endl : std::cout << "P2 win!" << std::endl;
+            if(CheckForWinner() != 2)
+            {
+                CheckForWinner() == 1 ? std::cout << "P1 win!" << std::endl : std::cout << "P2 win!" << std::endl;
+            }
+
             inGame = false;
         }
     }
